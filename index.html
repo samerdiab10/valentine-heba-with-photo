@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Heba ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    overflow:hidden;
+}
+
+.container{
+    background:white;
+    padding:30px 20px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+    text-align:center;
+    max-width:400px;
+    width:90%;
+    position:relative;
+    z-index:2;
+}
+
+button{
+    padding:10px 22px;
+    margin:8px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.yes{background:#4CAF50;color:white;}
+.no{background:#ff4b5c;color:white;}
+.next{background:#ff758c;color:white;}
+
+.hidden{display:none;}
+
+.message{
+    line-height:1.7;
+    margin-bottom:15px;
+    opacity:0;
+    transform:translateY(10px);
+    transition:0.6s ease;
+}
+
+.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* الصورة النهائية */
+.final-photo{
+    width:100%;
+    max-width:280px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    margin-top:15px;
+    opacity:0;
+    transform:scale(0.9);
+    transition:0.6s ease;
+}
+
+.final-photo.show{
+    opacity:1;
+    transform:scale(1);
+}
+
+/* قلوب */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation:float 5s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-110vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- الصفحة 1 -->
+    <div id="screen1">
+        <h2>404 – Page Not Found… or maybe something better? 😉</h2>
+        <button class="next" onclick="showQuestion()">Refresh</button>
+    </div>
+
+    <!-- الصفحة 2 -->
+    <div id="screen2" class="hidden">
+        <h2>Heba… Will you be my Valentine? ❤️</h2>
+        <button class="yes" onclick="showPage3()">YES</button>
+        <button class="no" onclick="moveNo(event)">NO</button>
+    </div>
+
+    <!-- الصفحة 3 -->
+    <div id="screen3" class="hidden">
+        <div id="text1" class="message">
+        Even though our story is just beginning, it already feels like you’ve been part of my life for a very long time.
+        </div>
+        <button class="next hidden" id="continueBtn" onclick="showPage4()">Continue</button>
+    </div>
+
+    <!-- الصفحة 4 -->
+    <div id="screen4" class="hidden">
+        <div id="text2" class="message">
+        - Protecting you like a king guards his queen<br>
+        - Standing by you through every win and every challenge<br>
+        - Late night drives, real talks, and building our future together<br><br>
+        Effective immediately. 😎
+        </div>
+
+        <!-- الصورة -->
+        <img src="photo.jpg" id="finalPhoto" class="final-photo">
+    </div>
+
+</div>
+
+<!-- موسيقى -->
+<audio id="music" src="music.mp3" loop></audio>
+
+<script>
+
+function hideAll(){
+    document.querySelectorAll(".container > div").forEach(s=>{
+        s.classList.add("hidden");
+    });
+}
+
+function showQuestion(){
+    hideAll();
+    document.getElementById("screen2").classList.remove("hidden");
+}
+
+function showPage3(){
+    hideAll();
+    document.getElementById("screen3").classList.remove("hidden");
+
+    // تشغيل الموسيقى
+    document.getElementById("music").play();
+
+    // ظهور النص
+    setTimeout(()=>{
+        document.getElementById("text1").classList.add("show");
+    },200);
+
+    // إظهار زر المتابعة
+    setTimeout(()=>{
+        document.getElementById("continueBtn").classList.remove("hidden");
+    },1200);
+
+    startHearts();
+}
+
+function showPage4(){
+    hideAll();
+    document.getElementById("screen4").classList.remove("hidden");
+
+    setTimeout(()=>{
+        document.getElementById("text2").classList.add("show");
+        document.getElementById("finalPhoto").classList.add("show");
+    },200);
+}
+
+function moveNo(e){
+    const btn=e.target;
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*80+"%";
+    btn.style.top=Math.random()*80+"%";
+}
+
+/* قلوب متحركة */
+function startHearts(){
+    setInterval(()=>{
+        const heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerHTML="❤️";
+        heart.style.left=Math.random()*100+"%";
+        heart.style.fontSize=(15+Math.random()*20)+"px";
+        heart.style.animationDuration=(3+Math.random()*3)+"s";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>heart.remove(),6000);
+    },400);
+}
+
+</script>
+
+</body>
+</html>
